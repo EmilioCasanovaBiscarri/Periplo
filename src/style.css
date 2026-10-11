@@ -111,6 +111,30 @@ h1 svg {
   font-variant-numeric: tabular-nums;
 }
 
+/* Estadísticas: icono de barras sin borde, como en los demás juegos del Almanaque. */
+.boton-estadisticas {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: -0.3rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.boton-estadisticas svg {
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
 .boton-ayuda {
   flex: none;
   width: 1.9rem;
@@ -129,8 +153,9 @@ h1 svg {
   }
 }
 
-/* Reglas del juego (diálogo modal). */
-#reglas {
+/* Reglas del juego y estadísticas (diálogos modales). */
+#reglas,
+#ventana-estadisticas {
   width: min(26rem, calc(100% - 2rem));
   max-height: calc(100% - 2rem);
   padding: 1.5rem 1.25rem 1.25rem;
@@ -141,11 +166,13 @@ h1 svg {
   box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.25);
 }
 
-#reglas::backdrop {
+#reglas::backdrop,
+#ventana-estadisticas::backdrop {
   background: rgb(0 0 0 / 0.45);
 }
 
-#reglas h2 {
+#reglas h2,
+#ventana-estadisticas h2 {
   margin: 0 0 1rem;
   font-family: var(--serif);
   font-size: 1.5rem;
@@ -161,7 +188,12 @@ h1 svg {
   margin-top: 0.6rem;
 }
 
-#reglas .cerrar {
+#ventana-estadisticas .estadisticas {
+  margin: 0 0 1.5rem;
+}
+
+#reglas .cerrar,
+#ventana-estadisticas .cerrar {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;

@@ -56,12 +56,16 @@ if (/^(localhost|127\.|10\.|192\.168\.)/.test(location.hostname) && new URLSearc
 const app = document.getElementById('app')!
 const aviso = document.getElementById('aviso')!
 const reglas = document.getElementById('reglas') as HTMLDialogElement
+const ventanaEstadisticas = document.getElementById('ventana-estadisticas') as HTMLDialogElement
 
-// Las reglas se cierran con sus botones, con Escape (nativo del diálogo) o tocando fuera.
-reglas.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => reglas.close()))
-reglas.addEventListener('click', (e) => {
-  if (e.target === reglas) reglas.close()
-})
+// Las reglas y las estadísticas se cierran con sus botones, con Escape (nativo del diálogo) o tocando fuera.
+for (const dialogo of [reglas, ventanaEstadisticas]) {
+  dialogo.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => dialogo.close()))
+  dialogo.addEventListener('click', (e) => {
+    if (e.target === dialogo) dialogo.close()
+  })
+}
+
 let guardado = cargar()
 let diaMostrado = 0
 /** Palabra en pantalla (0, 1, 2) o PALABRAS_POR_DIA para el resumen del día. */
@@ -83,6 +87,9 @@ function render() {
 
   app.innerHTML = `
     <header>
+      <button id="abrir-estadisticas" class="boton-estadisticas" type="button" aria-label="Estadísticas">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/></svg>
+      </button>
       <img class="logo" src="icons/icon.svg" alt="" width="40" height="40" />
       <div class="titulo">
         <h1>${marca}</h1>
@@ -109,6 +116,10 @@ function render() {
   })
   app.querySelector('#compartir')?.addEventListener('click', () => compartir(dia, resultados(palabras, elecciones)))
   app.querySelector('#ayuda')?.addEventListener('click', () => reglas.showModal())
+  app.querySelector('#abrir-estadisticas')?.addEventListener('click', () => {
+    ventanaEstadisticas.querySelector('#estadisticas-cuerpo')!.innerHTML = panelEstadisticas(dia)
+    ventanaEstadisticas.showModal()
+  })
 }
 
 interface ResultadoAlmanaque {
@@ -213,10 +224,21 @@ function viaje(palabra: Palabra): string {
   `
 }
 
-function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string {
-  const aciertos = resultados(palabras, elecciones)
+/** Días, aciertos y rachas: al final de la partida y en la ventana de estadísticas. */
+function panelEstadisticas(dia: number): string {
   const e = guardado.estadisticas
   const porcentaje = e.palabras ? Math.round((e.aciertos / e.palabras) * 100) : 0
+  return `
+    <section class="estadisticas">
+      <div><strong>${e.dias}</strong><span>días</span></div>
+      <div><strong>${porcentaje}%</strong><span>aciertos</span></div>
+      <div><strong>${rachaVigente(e, dia)}</strong><span>racha</span></div>
+      <div><strong>${e.mejorRacha}</strong><span>mejor racha</span></div>
+    </section>`
+}
+
+function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string {
+  const aciertos = resultados(palabras, elecciones)
   const lista = palabras
     .map(
       (palabra, i) => `
@@ -240,12 +262,7 @@ function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string
       <p class="ayuda">Toca una palabra para repasar su viaje.</p>
     </section>
 
-    <section class="estadisticas">
-      <div><strong>${e.dias}</strong><span>días</span></div>
-      <div><strong>${porcentaje}%</strong><span>aciertos</span></div>
-      <div><strong>${rachaVigente(e, dia)}</strong><span>racha</span></div>
-      <div><strong>${e.mejorRacha}</strong><span>mejor racha</span></div>
-    </section>
+    ${panelEstadisticas(dia)}
 
     <section class="pie">
       <button id="compartir" class="boton">Compartir</button>
