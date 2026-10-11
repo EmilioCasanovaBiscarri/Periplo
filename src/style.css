@@ -45,10 +45,11 @@ main {
   padding: max(1rem, env(safe-area-inset-top)) 1rem max(2rem, env(safe-area-inset-bottom));
 }
 
+/* Estadísticas a la izquierda, logo y nombre en el centro, ayuda a la derecha. */
 header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
   align-items: center;
-  gap: 0.6rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--linea);
 }
@@ -72,43 +73,11 @@ h1 svg {
   width: auto;
 }
 
-.subtitulo {
-  margin: 0.3rem 0 0;
-  color: var(--tenue);
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* En móviles estrechos (360–400 px) el subtítulo se aprieta para que quepa el marcador y,
-   si aun así no cabe (número o racha de tres cifras), pasa a dos líneas. */
-@media (max-width: 400px) {
-  .subtitulo {
-    letter-spacing: 0.14em;
-    white-space: normal;
-  }
-}
-
-/* Número del día, racha y ayuda: siempre en una sola fila, pegados a la derecha. */
-.marcador {
+.titulo {
   display: flex;
   align-items: center;
-  flex: none;
-  gap: 0.4rem;
-  margin-left: auto;
-}
-
-.numero {
-  color: var(--tenue);
-  font-variant-numeric: tabular-nums;
-}
-
-.racha {
-  font-weight: 600;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  justify-content: center;
+  gap: 0.6rem;
 }
 
 /* Estadísticas: icono de barras sin borde, como en los demás juegos del Almanaque. */
@@ -136,7 +105,7 @@ h1 svg {
 }
 
 .boton-ayuda {
-  flex: none;
+  justify-self: end;
   width: 1.9rem;
   height: 1.9rem;
   border: 1.5px solid var(--linea);

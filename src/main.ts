@@ -90,16 +90,11 @@ function render() {
       <button id="abrir-estadisticas" class="boton-estadisticas" type="button" aria-label="Estadísticas">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/></svg>
       </button>
-      <img class="logo" src="icons/icon.svg" alt="" width="40" height="40" />
       <div class="titulo">
+        <img class="logo" src="icons/icon.svg" alt="" width="40" height="40" />
         <h1>${marca}</h1>
-        <p class="subtitulo">Palabras con pasaporte</p>
       </div>
-      <div class="marcador">
-        <span class="numero">#${dia}</span>
-        <span class="racha" title="Días seguidos completados">🔥 ${rachaVigente(guardado.estadisticas, dia)}</span>
-        <button id="ayuda" class="boton-ayuda" type="button" aria-label="Cómo se juega">?</button>
-      </div>
+      <button id="ayuda" class="boton-ayuda" type="button" aria-label="Cómo se juega">?</button>
     </header>
 
     ${progreso(palabras, elecciones)}
