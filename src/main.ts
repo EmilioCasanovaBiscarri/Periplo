@@ -279,7 +279,7 @@ function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string
 
     <section class="pie">
       <button id="compartir" class="boton">Compartir</button>
-      <a class="boton boton-almanaque" data-almanaque-volver hidden href="https://joseleking.github.io/Almanaque/">☜ Regresar al Almanaque</a>
+      <a class="boton boton-almanaque" data-almanaque-volver hidden href="https://emiliocasanovabiscarri.github.io/Almanaque/">☜ Regresar al Almanaque</a>
     </section>
     <p class="siguiente">Nuevas palabras en <time id="cuenta">${cuentaAtras()}</time></p>
     <p class="creditos">

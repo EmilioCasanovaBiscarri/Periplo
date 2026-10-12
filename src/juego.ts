@@ -128,5 +128,5 @@ export function rachaVigente(e: Estadisticas, hoy: number): number {
 export function textoCompartir(numero: number, resultados: boolean[]): string {
   const marcas = resultados.map((r) => (r ? '▰' : '▱')).join('')
   const aciertos = resultados.filter(Boolean).length
-  return `Periplo nº ${numero} ${marcas} ${aciertos}/${resultados.length} aciertos\njoseleking.github.io/Periplo`
+  return `Periplo nº ${numero} ${marcas} ${aciertos}/${resultados.length} aciertos\nemiliocasanovabiscarri.github.io/Periplo`
 }

@@ -101,7 +101,7 @@ describe('racha', () => {
 
 describe('compartir', () => {
   it('muestra una casilla por palabra sin revelar respuestas', () => {
-    expect(textoCompartir(5, [true, false, true])).toBe('Periplo nº 5 ▰▱▰ 2/3 aciertos\njoseleking.github.io/Periplo')
+    expect(textoCompartir(5, [true, false, true])).toBe('Periplo nº 5 ▰▱▰ 2/3 aciertos\nemiliocasanovabiscarri.github.io/Periplo')
   })
 })
 
