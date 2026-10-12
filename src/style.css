@@ -390,14 +390,69 @@ h1 svg {
   line-height: 1.45;
 }
 
-/* Resumen del día: las palabras jugadas, desplegables para repasar su viaje. */
+/* Pantalla final, igual en todos los juegos del Almanaque: ficha con el resultado, una línea
+   por palabra, estadísticas y botones. Todo cabe en el móvil sin desplazarse hasta los botones. */
 .resumen {
-  padding-top: 1.5rem;
+  padding-top: 0.75rem;
   animation: aparecer 0.4s ease-out;
 }
 
+.ficha {
+  padding: 0.6rem 1rem 0.75rem;
+  border: 1px solid var(--linea);
+  outline: 1px solid var(--linea);
+  outline-offset: -5px;
+  border-radius: 2px;
+  background: var(--superficie);
+  text-align: center;
+}
+
+.marcas {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0.15rem 0 0;
+}
+
+.marcas svg {
+  width: 26px;
+  height: 26px;
+}
+
+.marcas .bien {
+  fill: var(--acento-trazo);
+}
+
+.marcas .mal {
+  fill: none;
+  stroke: var(--tenue);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+
+.ficha h2 {
+  margin: 0.1rem 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 2.3rem;
+  line-height: 1.05;
+}
+
+.ficha h2 small {
+  font-size: 0.55em;
+  color: var(--tenue);
+}
+
+.frase {
+  margin: 0.15rem 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--tenue);
+}
+
 .lista-resumen {
-  margin: 0;
+  margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -410,7 +465,8 @@ h1 svg {
   display: flex;
   align-items: baseline;
   gap: 0.75rem;
-  padding: 0.9rem 0.25rem;
+  min-height: 42px;
+  padding: 0.55rem 0.25rem;
   cursor: pointer;
   list-style: none;
 }
@@ -420,8 +476,10 @@ h1 svg {
 }
 
 .lista-resumen summary::after {
-  content: '▸';
+  content: '›';
   color: var(--tenue);
+  font-size: 1.2rem;
+  line-height: 1;
   transition: transform 0.2s;
 }
 
@@ -457,13 +515,6 @@ h1 svg {
   font-size: 0.85rem;
 }
 
-.ayuda {
-  margin: 0.75rem 0 0;
-  color: var(--tenue);
-  font-size: 0.8rem;
-  text-align: center;
-}
-
 .estadisticas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -486,9 +537,22 @@ h1 svg {
   font-size: 0.75rem;
 }
 
+.resumen ~ .estadisticas {
+  margin-top: 0.75rem;
+  padding: 0.4rem 0;
+}
+
+.resumen ~ .estadisticas strong {
+  font-size: 1.3rem;
+}
+
 .pie {
   padding-top: 1.5rem;
   text-align: center;
+}
+
+.resumen ~ .pie {
+  padding-top: 0.75rem;
 }
 
 .boton {
@@ -502,11 +566,15 @@ h1 svg {
   cursor: pointer;
 }
 
+.resumen ~ .pie .boton {
+  min-height: 48px;
+}
+
 .boton-almanaque {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
   border: 1.5px solid var(--acento);
   background: transparent;
   color: var(--acento);
@@ -514,7 +582,9 @@ h1 svg {
 }
 
 .siguiente {
+  margin: 0.9rem 0 0;
   color: var(--tenue);
+  text-align: center;
 }
 
 .siguiente time {
@@ -524,13 +594,42 @@ h1 svg {
 }
 
 .creditos {
-  margin: 1.5rem 0 0;
+  margin: 1.25rem 0 0;
   color: var(--tenue);
   font-size: 0.7rem;
+  text-align: center;
 }
 
 .creditos a {
   color: inherit;
+}
+
+/* En pantallas bajas (iPhone SE, Android pequeños) las estadísticas bajan bajo los botones,
+   para que Compartir, Siguiente juego y Regresar se vean sin desplazarse. */
+@media (max-height: 660px) {
+  #app:has(> .resumen) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #app:has(> .resumen) > .estadisticas,
+  #app:has(> .resumen) > .siguiente,
+  #app:has(> .resumen) > .creditos {
+    order: 1;
+  }
+
+  .resumen {
+    padding-top: 0.5rem;
+  }
+
+  .ficha {
+    padding: 0.4rem 1rem 0.55rem;
+  }
+
+  .lista-resumen summary {
+    min-height: 40px;
+    padding: 0.45rem 0.25rem;
+  }
 }
 
 #aviso {

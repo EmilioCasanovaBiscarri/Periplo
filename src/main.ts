@@ -97,7 +97,7 @@ function render() {
       <button id="ayuda" class="boton-ayuda" type="button" aria-label="Cómo se juega">?</button>
     </header>
 
-    ${progreso(palabras, elecciones)}
+    ${vista < PALABRAS_POR_DIA ? progreso(palabras, elecciones) : ''}
     ${vista < PALABRAS_POR_DIA ? reto(dia, vista, palabras[vista], elecciones) : resumen(dia, palabras, elecciones)}
   `
 
@@ -232,8 +232,23 @@ function panelEstadisticas(dia: number): string {
     </section>`
 }
 
+/** Frase de la ficha final según los aciertos del día (0 a 3). */
+const FRASES = [
+  'Hoy las palabras han viajado sin ti.',
+  'Un viaje bien trazado. Algo es algo.',
+  'Casi todos los rumbos bien trazados.',
+  'Ni una palabra perdida en el camino.',
+]
+
+/** Velero: marca de la ficha final, lleno si se acertó la palabra y hueco si no. */
+const VELERO = 'M11 2.5V15H4.5ZM13 5.5 19 15h-6ZM2.5 17h19l-3 4h-13Z'
+
 function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string {
   const aciertos = resultados(palabras, elecciones)
+  const total = aciertos.filter(Boolean).length
+  const veleros = aciertos
+    .map((a) => `<svg class="${a ? 'bien' : 'mal'}" viewBox="0 0 24 24" aria-hidden="true"><path d="${VELERO}"/></svg>`)
+    .join('')
   const lista = palabras
     .map(
       (palabra, i) => `
@@ -251,10 +266,13 @@ function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string
     .join('')
 
   return `
-    <section class="resumen">
-      <p class="veredicto">${aciertos.filter(Boolean).length} de ${PALABRAS_POR_DIA} aciertos</p>
-      <ol class="lista-resumen">${lista}</ol>
-      <p class="ayuda">Toca una palabra para repasar su viaje.</p>
+    <section class="resumen" aria-label="Resultado de hoy">
+      <div class="ficha">
+        <p class="marcas" role="img" aria-label="${total} ${total === 1 ? 'acierto' : 'aciertos'} de ${PALABRAS_POR_DIA}">${veleros}</p>
+        <h2>${total} <small>de ${PALABRAS_POR_DIA}</small></h2>
+        <p class="frase">${FRASES[total]}</p>
+      </div>
+      <ol class="lista-resumen" aria-label="Toca una palabra para repasar su viaje">${lista}</ol>
     </section>
 
     ${panelEstadisticas(dia)}
@@ -262,12 +280,12 @@ function resumen(dia: number, palabras: Palabra[], elecciones: Lengua[]): string
     <section class="pie">
       <button id="compartir" class="boton">Compartir</button>
       <a class="boton boton-almanaque" data-almanaque-volver hidden href="https://joseleking.github.io/Almanaque/">☜ Regresar al Almanaque</a>
-      <p class="siguiente">Nuevas palabras en <time id="cuenta">${cuentaAtras()}</time></p>
-      <p class="creditos">
-        Etimologías basadas en el DLE y en el
-        <a href="https://en.wiktionary.org" target="_blank" rel="noopener">Wikcionario</a> (CC BY-SA 4.0).
-      </p>
     </section>
+    <p class="siguiente">Nuevas palabras en <time id="cuenta">${cuentaAtras()}</time></p>
+    <p class="creditos">
+      Etimologías basadas en el DLE y en el
+      <a href="https://en.wiktionary.org" target="_blank" rel="noopener">Wikcionario</a> (CC BY-SA 4.0).
+    </p>
   `
 }
 
