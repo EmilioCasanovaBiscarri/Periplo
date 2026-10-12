@@ -45,3 +45,7 @@ no hay que reordenar ni borrar: las nuevas se añaden al final.
 Las etimologías de `src/palabras-wikcionario.json` proceden del [Wikcionario](https://en.wiktionary.org)
 (vía [kaikki.org](https://kaikki.org)) y se distribuyen bajo
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). El juego lo indica en la pantalla de resultado.
+
+## Derechos de autor
+
+© 2026 Emilio Casanova Biscarri. Todos los derechos reservados. El código, los textos y los diseños de este repositorio no pueden copiarse ni reutilizarse sin permiso, salvo los datos indicados en «Licencia de los datos», que conservan su propia licencia.
